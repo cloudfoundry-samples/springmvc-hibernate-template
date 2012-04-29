@@ -23,8 +23,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@Profile("default")
-public class DefaultDataSourceConfiguration implements DataSourceConfiguration {
+@Profile("local")
+public class LocalDataSourceConfiguration implements DataSourceConfiguration {
 
     @Autowired
     private Environment environment;

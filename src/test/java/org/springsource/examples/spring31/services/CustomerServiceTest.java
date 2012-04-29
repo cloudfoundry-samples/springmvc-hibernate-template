@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ActiveProfiles("default")
+@ActiveProfiles("local")
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class)
 public class CustomerServiceTest {
 
