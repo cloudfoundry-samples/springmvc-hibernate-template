@@ -1,0 +1,10 @@
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Juergen'  , 'Hoeller', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Mark'  , 'Fisher', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Chris'  , 'Richardson', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Josh'  , 'Long', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Dave'  , 'Syer', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Matt'  , 'Quinlan', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Gunnar'  , 'Hillert', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Dave'  , 'McCrory', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Raja'  , 'Rao', NOW()) ;
+ insert into customer (firstname ,lastname ,signupdate ) values( 'Monica'  , 'Wilkinson', NOW()) ;
