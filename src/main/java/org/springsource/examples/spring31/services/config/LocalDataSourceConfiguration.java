@@ -1,8 +1,13 @@
 package org.springsource.examples.spring31.services.config;
 
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
 import org.hibernate.dialect.H2Dialect;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.concurrent.ConcurrentMapCache;
@@ -10,27 +15,17 @@ import org.springframework.cache.support.SimpleCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import org.springframework.core.env.Environment;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
-import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-
-import javax.sql.DataSource;
-import java.sql.Driver;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @Configuration
 @Profile("local")
 public class LocalDataSourceConfiguration implements DataSourceConfiguration {
 
-    @Autowired
-    private Environment environment;
+    //@Autowired
+    //private Environment environment;
 
     @Bean
-    @SuppressWarnings("unchecked")
     public DataSource dataSource() throws Exception {
         return new EmbeddedDatabaseBuilder()
                 .setName("crm")

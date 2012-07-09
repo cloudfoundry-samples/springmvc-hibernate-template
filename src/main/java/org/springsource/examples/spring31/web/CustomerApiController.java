@@ -1,15 +1,19 @@
 package org.springsource.examples.spring31.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springsource.examples.spring31.services.Customer;
-import org.springsource.examples.spring31.services.CustomerService;
+import java.util.List;
 
 import javax.validation.Valid;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springsource.examples.spring31.services.Customer;
+import org.springsource.examples.spring31.services.CustomerService;
 
 @RequestMapping("/crm/")
 @Controller
@@ -34,7 +38,6 @@ public class CustomerApiController {
     }
 
     // http://springmvc31.joshlong.micro/crm/customers
-//    @ResponseStatus(value = HttpStatus.ACCEPTED)
     @RequestMapping(value = "/customers", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public void addCustomer(@Valid @RequestBody Customer customer) {
         customerService.createCustomer(customer.getFirstName(), customer.getLastName(), customer.getSignupDate());
