@@ -7,15 +7,32 @@ import org.springsource.examples.spring31.services.config.ServicesConfiguration;
 
 public class SpringApplicationContextInitializer implements ApplicationContextInitializer<AnnotationConfigWebApplicationContext> {
 
+    private CloudEnvironment cloudEnvironment = new CloudEnvironment();
+
+    private boolean isCloudFoundry() {
+        return cloudEnvironment.isCloudFoundry();
+    }
+
+    private boolean isAppFog() {
+        String cloudApiUri = cloudEnvironment.getCloudApiUri().toLowerCase();
+        return (cloudApiUri.contains(".af"));
+    }
+
+    private boolean isLocal() {
+        return !isCloudFoundry();
+    }
+
     @Override
     public void initialize(AnnotationConfigWebApplicationContext applicationContext) {
 
-        CloudEnvironment cloudEnvironment = new CloudEnvironment();
-        if (cloudEnvironment.isCloudFoundry()) {
-            applicationContext.getEnvironment().setActiveProfiles("cloud");
-        } else {
-            applicationContext.getEnvironment().setActiveProfiles("local");
+
+        String profile = "local";
+        if (isAppFog()) {
+            profile = "appfog";
+        } else if (isCloudFoundry()) {
+            profile = "cloud";
         }
+        applicationContext.getEnvironment().setActiveProfiles(profile);
 
         Class<?>[] configs = {ServicesConfiguration.class, WebMvcConfiguration.class};
 

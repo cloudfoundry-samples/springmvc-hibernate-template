@@ -22,7 +22,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 @Configuration
 @Profile("cloud")
-public class CloudDataSourceConfiguration implements DataSourceConfiguration {
+public class CloudFoundryDataSourceConfiguration implements DataSourceConfiguration {
 
     @Bean
     public CloudEnvironment environment() {
@@ -56,7 +56,6 @@ public class CloudDataSourceConfiguration implements DataSourceConfiguration {
     public Map<String, String> contributeSessionFactoryProperties() {
         Map<String, String> p = new HashMap<String, String>();
         p.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, "create");
-//        p.put(org.hibernate.cfg.Environment.HBM2DDL_IMPORT_FILES , "import_psql.sql");
         p.put(org.hibernate.cfg.Environment.DIALECT, PostgreSQLDialect.class.getName());
         p.put(org.hibernate.cfg.Environment.SHOW_SQL, "true");
         return p;
