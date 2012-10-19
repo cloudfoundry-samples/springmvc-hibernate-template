@@ -13,7 +13,9 @@ public class SpringApplicationContextInitializer implements ApplicationContextIn
         return cloudEnvironment.isCloudFoundry();
     }
 
-    private boolean isAppFog() {
+    private boolean isAppFog() { 
+    	if(!isCloudFoundry()) 
+    		return false;  
         String cloudApiUri = cloudEnvironment.getCloudApiUri().toLowerCase();
         return (cloudApiUri.contains(".af"));
     }
