@@ -5,16 +5,31 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springsource.examples.spring31.services.config.ServicesConfiguration;
+
+import java.util.List;
 
 
 @Configuration
 @EnableWebMvc
 @Import(ServicesConfiguration.class)
 public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
+    @Override
+    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
+        boolean forms = false ;
+         for(HttpMessageConverter httpMessageConverter : converters){
+             if(httpMessageConverter instanceof FormHttpMessageConverter){
+              forms =true ;
+             }
+         }
+        if(!forms)
+         converters.add(new FormHttpMessageConverter());
+    }
 
     @Bean
     public InternalResourceViewResolver internalResourceViewResolver() {

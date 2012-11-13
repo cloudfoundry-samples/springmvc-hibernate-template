@@ -5,63 +5,166 @@ $.ajaxSetup({
     cache:false
 });
 
-var utils = {
-    _url:'',
-    setup:function (u) {
-        this._url = u;
-    },
-    url:function (u) {
-        return this._url + u;
-    },
-    get:function (url, data, cb) {
-        $.ajax({
+
+function notExists(o, p, cb) {
+    if (!o[p] && o[p] == null) {
+        cb(p);
+    }
+}
+function exists(o, p, cb) {
+    if (o[p] && o[p] != null) {
+        cb(p, o[p]);
+    }
+}
+
+// todo
+var Ajax = (function (exp) {
+
+    var url = null;
+
+    function communicationError(url, method, data, ex) {
+        var errMsg = 'error when ' + (method + '').toUpperCase() +
+            '\'ing to url ' + url + (data == null ? '. Payload: ' +
+            JSON.stringify(data) : '') +
+            '. Exception: ' + JSON.stringify(ex);
+        console.log(errMsg);
+    }
+
+    function enrichHeadersForSubmission(headers) {
+        notExists(headers, 'contentType', function (pn) {
+            headers[pn] = 'application/json; charset=utf-8';
+        });
+        notExists(headers, 'cache', function (pn) {
+            headers[pn] = false;
+        });
+        notExists(headers, 'dataType', function (pn) {
+            headers[pn] = 'json';
+        });
+        return headers;
+    }
+
+
+    exp.setup = function (u) {
+        url = u;
+    };
+    exp.url = function (u) {
+        return  url + u;
+    };
+    exp.get = function (url, callback) {
+        $.ajax(enrichHeadersForSubmission({
             type:'GET',
             url:url,
-            cache:false,
-            dataType:'json',
-            contentType:'application/json; charset=utf-8',
-            success:cb,
-            error:function () {
-                alert('error trying to retrieve ' + u);
+            success:callback,
+            error:function (e) {
+                communicationError(url, 'GET', data, e);
             }
-        });
-    },
-    put:function (url, data, cb) {
+        }));
+    };
+    exp.put = function (url, d, callback) {
         var k = '_method',
             v = 'PUT';
+
+        var data = {};//{customer:d};
         data[k] = v;
+
+        console.log( JSON.stringify( data))
         var headers = {};
         headers[k] = v;
-        $.ajax({
+
+        // todo restor the call to enrichHeaders
+        $.ajax( ({
             type:'POST',
             url:url,
-            cache:false,
             headers:headers,
             data:data,
-            success:function (result) {
-                cb(result);
-            },
+            success:callback,
             error:function (e) {
-                console.log('error PUT\'ing to url ' + url + '. ' + JSON.stringify(e));
+                communicationError(url, 'POST', data, e);
             }
-        });     // todo
-
-    },
-    post:function (u, data, cb) {
-        $.ajax({
+        }));
+    };
+    exp.post = function (url, data, callback) {
+        $.ajax(enrichHeadersForSubmission({
             type:'POST',
-            url:u,
-            cache:false,
-            dataType:'json',
+            url:url,
             data:data,
-            contentType:'application/json; charset=utf-8',
-            success:cb,
-            error:function () {
-                alert('error trying to post to ' + u);
+            success:callback,
+            error:function (e) {
+                communicationError(u, 'PUT', data, e);
             }
-        });
-    }
-};
+        }));
+    };
+
+    return exp;
+})({});
+
+var utils = Ajax;
+/*if(false)
+ {
+ _url:'',
+ _communicationError:function (url, method, data, ex) {
+ var err = 'error when ' + (method + '').toUpperCase() +
+ '\'ing to url ' + url + (data == null ? '. Payload: ' +
+ JSON.stringify(data) : '') +
+ '. Exception: ' + JSON.stringify(ex);
+ console.log(err);
+ },
+ setup:function (u) {
+ this._url = u;
+ },
+ url:function (u) {
+ return this._url + u;
+ },
+ get:function (url, data, cb) {
+ $.ajax({
+ type:'GET',
+ url:url,
+ cache:false,
+ dataType:'json',
+ contentType:'application/json; charset=utf-8',
+ success:cb,
+ error:function (e) {
+ utils._communicationError(url, 'GET', data, e);
+ }
+ });
+ },
+ put:function (url, data, cb) {
+ var k = '_method',
+ v = 'PUT';
+ data[k] = v;
+ var headers = {};
+ headers[k] = v;
+ $.ajax({
+ type:'POST',
+ url:url,
+ cache:false,
+ contentType:'application/json; charset=utf-8',
+ headers:headers,
+ data:data,
+ success:function (result) {
+ cb(result);
+ },
+ error:function (e) {
+ utils._communicationError(url, 'POST', data, e);
+ }
+ });     // todo
+
+ },
+ post:function (u, data, cb) {
+ $.ajax({
+ type:'POST',
+ url:url,
+ cache:false,
+ dataType:'json',
+ data:data,
+ contentType:'application/json; charset=utf-8',
+ success:cb,
+ error:function (e) {
+ utils._communicationError(u, 'PUT', data, e);
+ }
+ });
+ }
+ };*/
 
 function CustomerCtrl($scope) {
     $scope.customers = [];
@@ -79,7 +182,7 @@ function CustomerCtrl($scope) {
 
     $scope.search = function () {
         var u = utils.url('/crm/search?q=' + $scope.query);
-        utils.get(u, {}, function (customers) {
+        utils.get(u, function (customers) {
             $scope.$apply(function () {
                 $scope.customers = customers;
                 if ($scope.searchResultsFound()) {
@@ -110,12 +213,6 @@ function CustomerCtrl($scope) {
     $scope.save = function () {
         var id = $scope.id;
         var data = {   firstName:$scope.customer.firstName, lastName:$scope.customer.lastName  };
-
-        function exists(o, p, cb) {
-            if (o[p] && o[p] != null) {
-                cb(p, o[p]);
-            }
-        }
 
         exists($scope.customer, 'id', function (pName, val) {
             data[pName] = val;

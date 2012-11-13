@@ -39,16 +39,17 @@ public class CustomerApiController {
     }
 
     // http://springmvc31.joshlong.micro/crm/customers
-    @ResponseBody
+  /* todo  @ResponseBody
     @RequestMapping(value = "/crm/customers", method = RequestMethod.GET)
     public List<Customer> customers() {
         return this.customerService.getAllCustomers();
-    }
+    }*/
 
     // http://springmvc31.joshlong.micro/crm/customers
     @ResponseBody
     @RequestMapping(value = "/crm/customers", method = RequestMethod.PUT)
-    public Integer addCustomer(@RequestParam("firstName") String fn, @RequestParam("lastName") String ln) {
+    public Integer addCustomer(@RequestBody Customer customer) {//@RequestParam("firstName") String fn, @RequestParam("lastName") String ln) {
+        String fn = customer.getFirstName(), ln = customer.getLastName();
         return customerService.createCustomer(fn, ln, new Date()).getId();
     }
 

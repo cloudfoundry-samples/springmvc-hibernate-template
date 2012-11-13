@@ -17,7 +17,6 @@ public class Customer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NotNull
     private Date signupDate;
 
     @NotNull
