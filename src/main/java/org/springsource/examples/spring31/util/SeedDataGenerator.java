@@ -1,6 +1,6 @@
 package org.springsource.examples.spring31.util;
 
-import com.sun.deploy.util.SystemUtils;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.util.StringUtils;
 
@@ -22,18 +22,18 @@ public class SeedDataGenerator implements InitializingBean {
 
     private String postgreSqlTemplate = "INSERT INTO customer(id, firstname, lastname, signupdate) values( nextval( 'hibernate_sequence') , '%s', '%s', NOW());";
 
-    public void setNames(String n){
-        this.names = n ;
+    public void setNames(String n) {
+        this.names = n;
     }
 
-    public void addName (String f, String l){
-        this.orderedUniqueNames.add(new String[]{f,l});
+    public void addName(String f, String l) {
+        this.orderedUniqueNames.add(new String[]{f, l});
     }
 
     public void generate(Writer writer, String sqlTemplate) throws Exception {
 
         for (String[] nameParts : this.orderedUniqueNames) {
-            writer.write(String.format(sqlTemplate, nameParts[0], nameParts[1])  );
+            writer.write(String.format(sqlTemplate, nameParts[0], nameParts[1]));
             writer.write(System.getProperty("line.separator"));
         }
     }
@@ -62,7 +62,7 @@ public class SeedDataGenerator implements InitializingBean {
         }
     }
 
-    public static void main (String [] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         SeedDataGenerator seedDataGenerator = new SeedDataGenerator();
         seedDataGenerator.afterPropertiesSet();
         seedDataGenerator.generate();
