@@ -34,7 +34,7 @@ public class CustomerService {
 
     public Collection<Customer> search(String name) {
         String sqlName = ("%" + name + "%").toLowerCase();
-        String sql = "select {c.*} from customer c where (LOWER( c.firstName ) LIKE :fn OR LOWER( c.lastName ) LIKE :ln)";
+        String sql = "select c.* from customer c where (LOWER( c.firstName ) LIKE :fn OR LOWER( c.lastName ) LIKE :ln)";
         return em.createNativeQuery(sql, Customer.class)
                 .setParameter("fn", sqlName)
                 .setParameter("ln", sqlName)

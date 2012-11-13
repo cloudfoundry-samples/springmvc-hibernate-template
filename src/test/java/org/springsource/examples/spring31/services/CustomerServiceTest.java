@@ -30,18 +30,17 @@ public class CustomerServiceTest {
 
     @Configuration
     @Import(ServicesConfiguration.class)
-    //  @ComponentScan(basePackageClasses =  CustomerService.class )
     static class CustomerConfiguration {
     }
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
     @Autowired
-    PlatformTransactionManager transactionManager;
+    private PlatformTransactionManager transactionManager;
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     Date signupDate = new Date();
 
@@ -87,5 +86,12 @@ public class CustomerServiceTest {
         customer = customerService.getCustomerById(customer.getId());
         assertEquals(customer.getFirstName(), "Joshua");
 
+    }
+
+    @Test
+    public void testSearchingForCustomers() throws Exception {
+        Customer customer = customerService.createCustomer(this.firstName, this.lastName, this.signupDate);
+
+        assertEquals(1, customerService.search("josh").size());
     }
 }

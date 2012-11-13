@@ -51,6 +51,7 @@ public class CloudFoundryDataSourceConfiguration implements DataSourceConfigurat
     public Map<String, String> contributeJpaEntityManagerProperties() {
         Map<String, String> p = new HashMap<String, String>();
         p.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, "create");
+        p.put(org.hibernate.cfg.Environment.HBM2DDL_IMPORT_FILES, "import_psql.sql");
         p.put(org.hibernate.cfg.Environment.DIALECT, PostgreSQLDialect.class.getName());
         p.put(org.hibernate.cfg.Environment.SHOW_SQL, "true");
         return p;
