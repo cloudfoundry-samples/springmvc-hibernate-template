@@ -24,22 +24,17 @@ import org.springframework.data.redis.core.RedisTemplate;
 @Profile("cloud")
 public class CloudFoundryDataSourceConfiguration implements DataSourceConfiguration {
 
-    @Bean
-    public CloudEnvironment environment() {
-        return new CloudEnvironment();
-    }
+    private CloudEnvironment cloudEnvironment = new CloudEnvironment();
 
     @Bean
     public DataSource dataSource() throws Exception {
-        CloudEnvironment environment = environment();
-        Collection<RdbmsServiceInfo> mysqlSvc = environment.getServiceInfos(RdbmsServiceInfo.class);
+        Collection<RdbmsServiceInfo> mysqlSvc = cloudEnvironment.getServiceInfos(RdbmsServiceInfo.class);
         RdbmsServiceCreator dataSourceCreator = new RdbmsServiceCreator();
         return dataSourceCreator.createService(mysqlSvc.iterator().next());
     }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() throws Exception {
-        CloudEnvironment cloudEnvironment = environment();
         RedisServiceInfo info = cloudEnvironment.getServiceInfos(RedisServiceInfo.class).iterator().next();
         RedisServiceCreator creator = new RedisServiceCreator();
         RedisConnectionFactory connectionFactory = creator.createService(info);
@@ -53,7 +48,7 @@ public class CloudFoundryDataSourceConfiguration implements DataSourceConfigurat
         return new RedisCacheManager(redisTemplate());
     }
 
-    public Map<String, String> contributeSessionFactoryProperties() {
+    public Map<String, String> contributeJpaEntityManagerProperties() {
         Map<String, String> p = new HashMap<String, String>();
         p.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, "create");
         p.put(org.hibernate.cfg.Environment.DIALECT, PostgreSQLDialect.class.getName());

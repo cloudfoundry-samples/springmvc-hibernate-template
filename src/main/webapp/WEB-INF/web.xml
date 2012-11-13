@@ -10,7 +10,6 @@
     </filter>
     <filter-mapping>
         <filter-name>hiddenHttpMethodFilter</filter-name>
-        <url-pattern>/</url-pattern>
         <servlet-name>appServlet</servlet-name>
     </filter-mapping>
 

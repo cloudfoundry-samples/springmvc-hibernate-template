@@ -1,0 +1,5 @@
+ - remove the AppFog specific configuratoin (but test that it's not needed, first!)
+ - add a search field (which shows search results)
+ - add an create capability to the form
+ - list search results 
+ - setup a dentists appointment for next week 

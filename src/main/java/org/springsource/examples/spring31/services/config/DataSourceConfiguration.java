@@ -16,5 +16,5 @@ public interface DataSourceConfiguration {
 
     DataSource dataSource() throws Exception;
 
-    Map<String, String> contributeSessionFactoryProperties() throws Exception;
+    Map<String, String> contributeJpaEntityManagerProperties() throws Exception;
 }

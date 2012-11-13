@@ -28,7 +28,7 @@ public class SpringApplicationContextInitializer implements ApplicationContextIn
     public void initialize(AnnotationConfigWebApplicationContext applicationContext) {
 
 
-        String profile = "local";
+        String profile = "default";
         if (isAppFog()) {
             profile = "appfog";
         } else if (isCloudFoundry()) {

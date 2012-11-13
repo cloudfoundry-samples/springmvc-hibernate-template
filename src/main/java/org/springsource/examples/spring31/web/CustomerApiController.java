@@ -1,50 +1,60 @@
 package org.springsource.examples.spring31.web;
 
-import java.util.List;
-
-import javax.validation.Valid;
-
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springsource.examples.spring31.services.Customer;
 import org.springsource.examples.spring31.services.CustomerService;
 
-@RequestMapping("/crm/")
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+
+//
+//@RequestMapping(
+//        //consumes = MediaType.APPLICATION_JSON_VALUE,
+//        produces = MediaType.APPLICATION_JSON_VALUE)
 @Controller
 public class CustomerApiController {
+
+    private Logger log = Logger.getLogger(getClass());
 
     @Autowired
     private CustomerService customerService;
 
     @ResponseBody
-    @RequestMapping(value = "/customer/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Customer customerById(@PathVariable("id") Integer id) {
-        Customer customer = this.customerService.getCustomerById(id);
+    @RequestMapping(value = "/crm/search", method = RequestMethod.GET)
+    public Collection<Customer> search(@RequestParam("q") String query) throws Exception {
+        Collection<Customer> customers = customerService.search(query);
+        if (log.isDebugEnabled())
+            log.debug(String.format("retrieved %s results for search query '%s'", Integer.toString(customers.size()), query));
+        return customers;
+    }
 
-        return customer ;
+    @ResponseBody
+    @RequestMapping(value = "/crm/customer/{id}", method = RequestMethod.GET)
+    public Customer customerById(@PathVariable("id") Integer id) {
+        return this.customerService.getCustomerById(id);
     }
 
     // http://springmvc31.joshlong.micro/crm/customers
     @ResponseBody
-    @RequestMapping(value = "/customers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/crm/customers", method = RequestMethod.GET)
     public List<Customer> customers() {
         return this.customerService.getAllCustomers();
     }
 
     // http://springmvc31.joshlong.micro/crm/customers
-    @RequestMapping(value = "/customers", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void addCustomer(@Valid @RequestBody Customer customer) {
-        customerService.createCustomer(customer.getFirstName(), customer.getLastName(), customer.getSignupDate());
+    @ResponseBody
+    @RequestMapping(value = "/crm/customers", method = RequestMethod.PUT)
+    public Integer addCustomer(@RequestParam("firstName") String fn, @RequestParam("lastName") String ln) {
+        return customerService.createCustomer(fn, ln, new Date()).getId();
     }
 
+
     @ResponseBody
-    @RequestMapping(value = "/customer/{id}", method = RequestMethod.POST ) //,    consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/crm/customer/{id}", method = RequestMethod.POST)
     public Integer updateCustomer(@PathVariable("id") Integer id, @RequestBody Customer customer) {
         customerService.updateCustomer(id, customer.getFirstName(), customer.getLastName(), customer.getSignupDate());
         return id;
