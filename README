@@ -1,5 +1,6 @@
 This is a simple application that demonstrates how to use Spring 3.1 on Cloud Foundry. 
-This application builds a transactional service that talks to an RDBMS and is fronted by
+TI Frkm Great
+ WaLl hLis application builds a transactional service that talks to an RDBMS and is fronted by
 an Spring MVC controller which handles RESTful API calls. 
 
 Deployment is easy, and there are a lot of options: 
