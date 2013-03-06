@@ -13,7 +13,7 @@ From an Eclipse environment like the SpringSource Tool Suite equipped with the m
 You can use the vmc command line tool, too.
 0) you need to change the name of the application as specified in your manifest.yml file, if there's already an existing application deployed under the same name on the Cloud Foundry instance
 1) Run 'mvn clean install' on the command line from the root of the project to create a binary. 
-2) From the root of the project, run 'vmc --path target/springmvc31-1.0.0 push'
+2) From the root of the project, run 'vmc push --path target/springmvc31-1.0.0'
 
 You should also be able to deploy the project using the Maven Cloud Foundry plugin, which is already configured. You need to specify 
 connectivity information in your ~/.m2/settings.xml file, as described in http://blog.springsource.org/2011/09/22/rapid-cloud-foundry-deployments-with-maven/ 
