@@ -1,4 +1,3 @@
---INSERT INTO customer(firstname, lastname, signupdate) values ('%s','%s', NOW() );
 INSERT INTO customer(firstname, lastname, signupdate) values ('Juergen','Hoeller', NOW() );
 INSERT INTO customer(firstname, lastname, signupdate) values ('Mark','Fisher', NOW() );
 INSERT INTO customer(firstname, lastname, signupdate) values ('Rod','Johnson', NOW() );

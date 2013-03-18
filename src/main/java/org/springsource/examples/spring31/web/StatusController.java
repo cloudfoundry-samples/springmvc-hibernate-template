@@ -17,7 +17,6 @@ import java.util.Properties;
  *
  * @author Josh Long
  */
-@RequestMapping(method = RequestMethod.GET )
 @Controller
 public class StatusController {
 

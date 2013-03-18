@@ -12,6 +12,7 @@ import org.cloudfoundry.runtime.env.RedisServiceInfo;
 import org.cloudfoundry.runtime.service.keyvalue.RedisServiceCreator;
 import org.cloudfoundry.runtime.service.relational.RdbmsServiceCreator;
 import org.hibernate.dialect.PostgreSQLDialect;
+import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,10 +20,12 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springsource.examples.spring31.services.Customer;
 
 @Configuration
 @Profile("cloud")
-public class CloudFoundryDataSourceConfiguration implements DataSourceConfiguration {
+public class CloudFoundryDataSourceConfiguration   {
 
     private CloudEnvironment cloudEnvironment = new CloudEnvironment();
 
@@ -44,17 +47,24 @@ public class CloudFoundryDataSourceConfiguration implements DataSourceConfigurat
     }
 
     @Bean
-    public CacheManager cacheManager() throws Exception {
-        return new RedisCacheManager(redisTemplate());
-    }
-
-    public Map<String, String> contributeJpaEntityManagerProperties() {
+    public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean( DataSource dataSource  ) throws Exception {
+        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
+        em.setDataSource( dataSource );
+        em.setPackagesToScan(Customer.class.getPackage().getName());
+        em.setPersistenceProvider(new HibernatePersistence());
         Map<String, String> p = new HashMap<String, String>();
         p.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, "create");
         p.put(org.hibernate.cfg.Environment.HBM2DDL_IMPORT_FILES, "import_psql.sql");
         p.put(org.hibernate.cfg.Environment.DIALECT, PostgreSQLDialect.class.getName());
         p.put(org.hibernate.cfg.Environment.SHOW_SQL, "true");
-        return p;
+        em.setJpaPropertyMap(p);
+        return em;
+    }
+
+
+    @Bean
+    public CacheManager cacheManager() throws Exception {
+        return new RedisCacheManager(redisTemplate());
     }
 
 }

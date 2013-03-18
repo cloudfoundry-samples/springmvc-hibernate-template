@@ -10,7 +10,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
@@ -25,13 +24,9 @@ import static org.junit.Assert.assertNotNull;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ActiveProfiles("default")
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class)
+@ContextConfiguration
 public class CustomerServiceTest {
 
-    @Configuration
-    @Import(ServicesConfiguration.class)
-    static class CustomerConfiguration {
-    }
 
     @Autowired
     private CustomerService customerService;
@@ -49,6 +44,14 @@ public class CustomerServiceTest {
     String lastName = "Long";
 
     JdbcTemplate jdbcTemplate;
+
+
+    @Configuration
+    @Import({ServicesConfiguration.class})
+    public static class CustomerServiceTestConfiguration {
+        // noop we just want the beans in the ServicesConfiguration class
+    }
+
 
     @Before
     public void before() throws Exception {

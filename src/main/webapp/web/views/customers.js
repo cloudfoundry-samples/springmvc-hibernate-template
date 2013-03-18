@@ -95,7 +95,7 @@ function CustomerCtrl($scope) {
     };
 
     function loadCustomerById(id, cb) {
-        var u = utils.url('/crm/customer/' + id);
+        var u = utils.url('/crm/customers/' + id);
         utils.get(u, {}, cb);
     }
 
@@ -135,7 +135,7 @@ function CustomerCtrl($scope) {
         var u = null;
         if (id != null && id > 0) {
             // then we're simply going to update it
-            u = utils.url('/crm/customer/' + id);
+            u = utils.url('/crm/customers/' + id);
             console.log('JSON to send' + JSON.stringify(data))
             utils.post(u, JSON.stringify(data), idReceivingCallback);
         }

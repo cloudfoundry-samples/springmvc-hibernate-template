@@ -2,6 +2,7 @@ package org.springsource.examples.spring31.web;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -14,6 +15,7 @@ import org.springsource.examples.spring31.services.config.ServicesConfiguration;
 @Configuration
 @EnableWebMvc
 @Import(ServicesConfiguration.class)
+@ComponentScan(basePackageClasses = {CustomerApiController.class})
 public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
@@ -35,12 +37,12 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-       registry.addResourceHandler("/web/**").addResourceLocations("/web/");
+        registry.addResourceHandler("/web/**").addResourceLocations("/web/");
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-      registry.addViewController("/").setViewName("customers");
+        registry.addViewController("/").setViewName("customers");
     }
 
     @Override

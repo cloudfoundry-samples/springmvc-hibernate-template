@@ -46,18 +46,7 @@
                 </div>
             </form>
     </div>
-<%--
-
-    <div>
-        <form class="well form-search" ng-submit="lookupCustomer()">
-            <label> Search by Name</label>
-            <input type="text" ng-model="name" class="input-medium search-query" width="5" size="5"
-                   placeholder="customer name">
-            <button type="submit" class="btn btn-primary" ng-click="lookupCustomer()">
-                <a class="icon-search"></a>
-            </button>
-        </form>
-    </div>--%>
+ 
 
     <form class="form-horizontal" ng-submit="updateCustomer">
         <fieldset>

@@ -1,0 +1,18 @@
+--- 
+applications: 
+- url: springoncloudfoundry-sample.${target-base}
+  memory: 512M
+  name: springmvchibtemp
+  runtime: java7
+  framework: java_web
+  services: 
+    postgresql-61373: 
+      version: "9.0"
+      tier: free
+      vendor: postgresql
+    redis-755b3: 
+      version: "2.6"
+      tier: free
+      vendor: redis
+  instances: 1
+  path: target
