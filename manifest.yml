@@ -6,11 +6,11 @@ applications:
   runtime: java7
   framework: java_web
   services: 
-    postgresql-61373: 
+    postgresql-for-cf-and-spring-sample: 
       version: "9.0"
       tier: free
       vendor: postgresql
-    redis-755b3: 
+    redis-for-cf-and-spring-sample: 
       version: "2.6"
       tier: free
       vendor: redis
