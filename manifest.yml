@@ -1,8 +1,8 @@
 --- 
 applications: 
-- url: springoncloudfoundry-sample.${target-base}
+- url: spring-sample-${random-word}.${target-base}
   memory: 512M
-  name: springmvchibtemp
+  name: spring-on-cloudfoundry-sample
   runtime: java7
   framework: java_web
   services: 
