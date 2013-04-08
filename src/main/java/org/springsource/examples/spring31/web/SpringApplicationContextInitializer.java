@@ -13,37 +13,29 @@ public class SpringApplicationContextInitializer implements ApplicationContextIn
         return cloudEnvironment.isCloudFoundry();
     }
 
-    private boolean isAppFog() { 
-    	if(!isCloudFoundry()) 
-    		return false;  
-        String cloudApiUri = cloudEnvironment.getCloudApiUri().toLowerCase();
-        return (cloudApiUri.contains(".af"));
-    }
-
-    private boolean isLocal() {
-        return !isCloudFoundry();
-    }
-
     @Override
     public void initialize(AnnotationConfigWebApplicationContext applicationContext) {
 
 
-        String profile = "default";
-        if (isAppFog()) {
-            profile = "appfog";
-        } else if (isCloudFoundry()) {
+        String profile;
+
+        if (isCloudFoundry()) {
             profile = "cloud";
+        } else {
+            profile = "default";
         }
+
         applicationContext.getEnvironment().setActiveProfiles(profile);
 
-        Class<?>[] configs = {ServicesConfiguration.class, WebMvcConfiguration.class};
+       /* Class<?>[] configs = {ServicesConfiguration.class, WebMvcConfiguration.class};
 
         String[] basePkgs = new String[configs.length];
         int i = 0;
         for (Class<?> pkg : configs)
             basePkgs[i++] = pkg.getPackage().getName();
 
-        applicationContext.scan(basePkgs);
+        applicationContext.scan(basePkgs);*/
+        applicationContext.register( WebMvcConfiguration.class );
         applicationContext.refresh();
     }
 }
