@@ -1,13 +1,11 @@
 package org.springsource.examples.spring31.services;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
+@Table(name = "customer")
 @Entity
 public class Customer implements Serializable {
 
