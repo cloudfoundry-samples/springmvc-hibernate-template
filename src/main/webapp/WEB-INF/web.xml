@@ -26,7 +26,7 @@
         </init-param>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value></param-value>
+            <param-value>org.springsource.cloudfoundry.mvc.web.WebMvcConfiguration</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

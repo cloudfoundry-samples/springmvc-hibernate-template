@@ -15,7 +15,7 @@ import org.springsource.cloudfoundry.mvc.services.config.ServicesConfiguration;
 @Configuration
 @EnableWebMvc
 @Import(ServicesConfiguration.class)
-@ComponentScan(basePackageClasses = {CustomerApiController.class})
+@ComponentScan
 public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean
