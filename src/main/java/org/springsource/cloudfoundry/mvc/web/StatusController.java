@@ -1,10 +1,8 @@
-package org.springsource.examples.spring31.web;
+package org.springsource.cloudfoundry.mvc.web;
 
 import org.cloudfoundry.runtime.env.CloudEnvironment;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;

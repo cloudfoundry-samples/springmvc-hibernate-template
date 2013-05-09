@@ -1,4 +1,4 @@
-package org.springsource.examples.spring31.web;
+package org.springsource.cloudfoundry.mvc.web;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -9,7 +9,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
-import org.springsource.examples.spring31.services.config.ServicesConfiguration;
+import org.springsource.cloudfoundry.mvc.services.config.ServicesConfiguration;
 
 
 @Configuration

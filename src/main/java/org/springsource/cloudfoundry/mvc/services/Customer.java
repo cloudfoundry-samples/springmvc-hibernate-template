@@ -1,4 +1,4 @@
-package org.springsource.examples.spring31.services;
+package org.springsource.cloudfoundry.mvc.services;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

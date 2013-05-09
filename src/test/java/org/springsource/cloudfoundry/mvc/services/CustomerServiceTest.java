@@ -1,4 +1,4 @@
-package org.springsource.examples.spring31.services;
+package org.springsource.cloudfoundry.mvc.services;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
-import org.springsource.examples.spring31.services.config.ServicesConfiguration;
+import org.springsource.cloudfoundry.mvc.services.config.ServicesConfiguration;
 
 import javax.sql.DataSource;
 import java.util.Date;

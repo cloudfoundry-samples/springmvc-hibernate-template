@@ -1,11 +1,11 @@
-package org.springsource.examples.spring31.web;
+package org.springsource.cloudfoundry.mvc.web;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springsource.examples.spring31.services.Customer;
-import org.springsource.examples.spring31.services.CustomerService;
+import org.springsource.cloudfoundry.mvc.services.Customer;
+import org.springsource.cloudfoundry.mvc.services.CustomerService;
 
 import java.util.Collection;
 import java.util.Date;

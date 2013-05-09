@@ -1,9 +1,8 @@
-package org.springsource.examples.spring31.web;
+package org.springsource.cloudfoundry.mvc.web;
 
 import org.cloudfoundry.runtime.env.CloudEnvironment;
 import org.springframework.context.ApplicationContextInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springsource.examples.spring31.services.config.ServicesConfiguration;
 
 public class SpringApplicationContextInitializer implements ApplicationContextInitializer<AnnotationConfigWebApplicationContext> {
 

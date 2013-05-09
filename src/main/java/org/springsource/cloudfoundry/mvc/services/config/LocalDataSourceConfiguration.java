@@ -1,4 +1,4 @@
-package org.springsource.examples.spring31.services.config;
+package org.springsource.cloudfoundry.mvc.services.config;
 
 
 import org.hibernate.dialect.H2Dialect;
@@ -14,7 +14,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springsource.examples.spring31.services.Customer;
+import org.springsource.cloudfoundry.mvc.services.Customer;
 
 import javax.sql.DataSource;
 import java.util.Arrays;

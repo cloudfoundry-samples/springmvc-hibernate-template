@@ -1,11 +1,9 @@
-package org.springsource.examples.spring31.services;
+package org.springsource.cloudfoundry.mvc.services;
 
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springsource.examples.spring31.services.config.ServicesConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
