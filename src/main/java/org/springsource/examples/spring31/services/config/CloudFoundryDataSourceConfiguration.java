@@ -64,10 +64,12 @@ public class CloudFoundryDataSourceConfiguration {
         String labelGiven =  rdbmsServiceCreator.getLabel();
         System.out.println( "Label: '" + labelGiven+"'");
 
-        if (rdbmsServiceCreator.getLabel().toLowerCase().contains("postgre")) {
+        String serviceLabel = rdbmsServiceCreator.getLabel().toLowerCase();
+
+        if (serviceLabel.contains("postgre") || serviceLabel.contains("elephantsql")) {
             stringStringHashMap.put(org.hibernate.cfg.Environment.HBM2DDL_IMPORT_FILES, "import_psql.sql");
             stringStringHashMap.put(org.hibernate.cfg.Environment.DIALECT, PostgreSQLDialect.class.getName());
-        } else if (rdbmsServiceCreator.getLabel().toLowerCase().contains("mysql")) {
+        } else if (serviceLabel.contains("mysql") || serviceLabel.contains("cleardb")) {
             stringStringHashMap.put(org.hibernate.cfg.Environment.HBM2DDL_IMPORT_FILES, "import_mysql.sql");
             stringStringHashMap.put(org.hibernate.cfg.Environment.DIALECT, MySQL5Dialect.class.getName());
         }

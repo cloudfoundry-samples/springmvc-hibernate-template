@@ -1,0 +1,17 @@
+--- 
+applications: 
+- name: springmvc31
+  memory: 512M
+  instances: 1
+  path: target
+  services: 
+    springmvc31-cleardb: 
+      label: cleardb-dev
+      provider: cleardb
+      version: n/a
+      plan: spark
+    springmvc31-rediscloud: 
+      label: rediscloud-dev
+      provider: garantiadata
+      version: n/a
+      plan: 20mb
