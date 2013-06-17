@@ -6,12 +6,12 @@ applications:
   path: target
   services: 
     springmvc31-cleardb: 
-      label: cleardb-dev
+      label: cleardb
       provider: cleardb
       version: n/a
       plan: spark
     springmvc31-rediscloud: 
-      label: rediscloud-dev
+      label: rediscloud
       provider: garantiadata
       version: n/a
       plan: 20mb
