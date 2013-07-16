@@ -14,7 +14,7 @@ import javax.persistence.EntityManagerFactory;
 @PropertySource("/config.properties")
 @EnableCaching
 @EnableTransactionManagement
-@Import({CloudFoundryDataSourceConfiguration.class, LocalDataSourceConfiguration.class})
+@Import(LocalDataSourceConfiguration.class)
 @ComponentScan(basePackageClasses = {CustomerService.class})
 public class ServicesConfiguration {
 

@@ -1,18 +1,19 @@
---- 
-applications: 
-- name: springmvc31
-  framework: spring
-  runtime: java7
+---
+applications:
+- name: spring-hibernate
   memory: 512M
   instances: 1
-  url: sf-springmvc31.${target-base}
+  host: spring-hibernate
+  domain: cfapps.io
   path: target/springmvc31-1.0.0.war
-  services: 
-    spring-redis: 
-      vendor: redis
-      version: "2.2"
-      tier: free
-    spring-postgres: 
-      vendor: postgresql
-      version: "9.0"
-      tier: free
+  services:
+    spring-redis:
+      label: rediscloud
+      provider: garantiadata
+      version: n/a
+      plan: 20mb
+    spring-postgres:
+      label: elephantsql
+      provider: elephantsql
+      version: n/a
+      plan: turtle
