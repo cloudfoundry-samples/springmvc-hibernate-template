@@ -3,9 +3,9 @@ applications:
 - name: spring-hibernate
   memory: 512M
   instances: 1
-  host: spring-hibernate
+  host: spring-hibernate-${random-word}
   domain: cfapps.io
-  path: target/springmvc31-1.0.0.war
+  path: target
   services:
     spring-redis:
       label: rediscloud
