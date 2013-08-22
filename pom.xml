@@ -10,9 +10,22 @@
 
     <properties>
         <java-version>1.6</java-version>
-        <org.springframework-version>3.2.2.RELEASE</org.springframework-version>
+        <org.springframework-version>3.2.4.RELEASE</org.springframework-version>
+        	<jackson.version>2.2.2</jackson.version>
     </properties>
     <dependencies>
+		<!-- CloudFoundry -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>cloudfoundry-connector</artifactId>
+			<version>1.0.0.CI-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-service-connector</artifactId>
+			<version>1.0.0.CI-SNAPSHOT</version>
+		</dependency>
+    
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -65,16 +78,17 @@
             <version>1.2</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.4.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.cloudfoundry</groupId>
-            <artifactId>cloudfoundry-runtime</artifactId>
-            <version>0.8.5</version>
-        </dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+        
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
@@ -113,6 +127,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
         <dependency>

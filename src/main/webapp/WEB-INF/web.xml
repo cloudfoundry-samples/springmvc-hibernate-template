@@ -3,6 +3,21 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
+	<context-param>
+	    <param-name>contextClass</param-name>
+	    <param-value>
+	        org.springframework.web.context.support.AnnotationConfigWebApplicationContext
+	    </param-value>
+	</context-param>
+	
+	<context-param>
+	    <param-name>contextConfigLocation</param-name>
+	    <param-value>org.springsource.cloudfoundry.mvc.services.config.ServicesConfiguration</param-value>
+	</context-param>
+	
+	<listener>
+	    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 
     <filter>
         <filter-name>hiddenHttpMethodFilter</filter-name>
@@ -16,11 +31,7 @@
     <servlet>
         <servlet-name>appServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <init-param>
-            <param-name>contextInitializerClasses</param-name>
-            <param-value>org.springsource.cloudfoundry.mvc.web.SpringApplicationContextInitializer</param-value>
-        </init-param>
-        <init-param>
+		<init-param>
             <param-name>contextClass</param-name>
             <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
         </init-param>
