@@ -26,7 +26,7 @@ connectivity information in your ~/.m2/settings.xml file, as described in http:/
 
 Here are some SQL statements to setup the database:
 
- ## H2
+## H2
  ```
  insert into customer (firstname ,lastname ,signupdate ) values( 'Juergen'  , 'Hoeller', NOW()) ;
  insert into customer (firstname ,lastname ,signupdate ) values( 'Mark'  , 'Fisher', NOW()) ;
