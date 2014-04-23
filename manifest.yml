@@ -5,15 +5,7 @@ applications:
   instances: 1
   host: springmvc-hibernate-template-${random-word}
   domain: cfapps.io
-  path: target
+  path: target/web-1.0.0.war
   services: 
-    springmvc-hibernate-db: 
-      label: elephantsql
-      provider: elephantsql
-      version: n/a
-      plan: turtle
-    springmvc-hibernate-redis: 
-      label: rediscloud
-      provider: garantiadata
-      version: n/a
-      plan: 20mb
+    - springmvc-hibernate-db
+    - springmvc-hibernate-redis 

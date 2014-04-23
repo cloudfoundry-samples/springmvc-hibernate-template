@@ -8,8 +8,7 @@ import javax.sql.DataSource;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.cache.CacheManager;
-import org.springframework.cloud.Cloud;
-import org.springframework.cloud.CloudFactory;
+import org.springframework.cloud.config.java.AbstractCloudConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -21,23 +20,22 @@ import org.springsource.cloudfoundry.mvc.services.Customer;
 
 @Configuration
 @Profile("cloud")
-public class CloudFoundryDataSourceConfiguration   {
-
-	@Bean Cloud cloud() {
-		CloudFactory cloudFactory = new CloudFactory();
-		return cloudFactory.getCloud();
-	}
+public class CloudFoundryDataSourceConfiguration extends AbstractCloudConfig  {
 
     @Bean
-    public DataSource dataSource(Cloud cloud) throws Exception {
-    		return cloud.getSingletonServiceConnector(DataSource.class, null);
+    public DataSource dataSource() {
+    		return connectionFactory().dataSource();
+    }
+    
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        return connectionFactory().redisConnectionFactory();
     }
 
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(Cloud cloud) throws Exception {
-        RedisConnectionFactory connectionFactory = cloud.getSingletonServiceConnector(RedisConnectionFactory.class, null);
+    public RedisTemplate<String, Object> redisTemplate() throws Exception {
         RedisTemplate<String, Object> ro = new RedisTemplate<String, Object>();
-        ro.setConnectionFactory(connectionFactory);
+        ro.setConnectionFactory(redisConnectionFactory());
         return ro;
     }
 
@@ -58,8 +56,8 @@ public class CloudFoundryDataSourceConfiguration   {
     }
 
     @Bean
-    public CacheManager cacheManager(Cloud cloud) throws Exception {
-        return new RedisCacheManager(redisTemplate(cloud));
+    public CacheManager cacheManager() throws Exception {
+        return new RedisCacheManager(redisTemplate());
     }
 
 }
