@@ -1,19 +1,14 @@
 package org.springsource.cloudfoundry.mvc.services.config;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.cloudfoundry.runtime.env.CloudEnvironment;
-import org.cloudfoundry.runtime.env.RdbmsServiceInfo;
-import org.cloudfoundry.runtime.env.RedisServiceInfo;
-import org.cloudfoundry.runtime.service.keyvalue.RedisServiceCreator;
-import org.cloudfoundry.runtime.service.relational.RdbmsServiceCreator;
 import org.hibernate.dialect.PostgreSQLDialect;
 import org.hibernate.ejb.HibernatePersistence;
 import org.springframework.cache.CacheManager;
+import org.springframework.cloud.config.java.AbstractCloudConfig;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -25,27 +20,26 @@ import org.springsource.cloudfoundry.mvc.services.Customer;
 
 @Configuration
 @Profile("cloud")
-public class CloudFoundryDataSourceConfiguration   {
-
-    private CloudEnvironment cloudEnvironment = new CloudEnvironment();
+public class CloudFoundryDataSourceConfiguration extends AbstractCloudConfig  {
 
     @Bean
-    public DataSource dataSource() throws Exception {
-        Collection<RdbmsServiceInfo> mysqlSvc = cloudEnvironment.getServiceInfos(RdbmsServiceInfo.class);
-        RdbmsServiceCreator dataSourceCreator = new RdbmsServiceCreator();
-        return dataSourceCreator.createService(mysqlSvc.iterator().next());
+    public DataSource dataSource() {
+    		return connectionFactory().dataSource();
+    }
+    
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        return connectionFactory().redisConnectionFactory();
     }
 
     @Bean
     public RedisTemplate<String, Object> redisTemplate() throws Exception {
-        RedisServiceInfo info = cloudEnvironment.getServiceInfos(RedisServiceInfo.class).iterator().next();
-        RedisServiceCreator creator = new RedisServiceCreator();
-        RedisConnectionFactory connectionFactory = creator.createService(info);
         RedisTemplate<String, Object> ro = new RedisTemplate<String, Object>();
-        ro.setConnectionFactory(connectionFactory);
+        ro.setConnectionFactory(redisConnectionFactory());
         return ro;
     }
 
+    
     @Bean
     public LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean( DataSource dataSource  ) throws Exception {
         LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -60,7 +54,6 @@ public class CloudFoundryDataSourceConfiguration   {
         em.setJpaPropertyMap(p);
         return em;
     }
-
 
     @Bean
     public CacheManager cacheManager() throws Exception {

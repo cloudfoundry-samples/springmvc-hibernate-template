@@ -1,13 +1,16 @@
 package org.springsource.cloudfoundry.mvc.web;
 
-import org.cloudfoundry.runtime.env.CloudEnvironment;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.Cloud;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
 
 /**
  * Simple example demonstrating the unique environment properties of your application
@@ -16,8 +19,11 @@ import java.util.Properties;
  * @author Josh Long
  */
 @Controller
+@Profile("cloud")
 public class StatusController {
 
+	@Autowired private Cloud cloud;
+	
     @RequestMapping(value = "/properties")
     @ResponseBody
     public Map<String, String> properties() throws Throwable {
@@ -36,7 +42,12 @@ public class StatusController {
 
     @ResponseBody
     @RequestMapping(value = "/status")
-    public CloudEnvironment showCloudEnvironment() {
-        return new CloudEnvironment();
+    public Map<String, String> showCloudProperties() {
+    		Map<String, String> props = new HashMap<String, String>();
+    		
+    		for (Entry<Object, Object> entry: cloud.getCloudProperties().entrySet()) {
+    			props.put(entry.getKey().toString(), entry.getValue().toString());
+    		}
+        return props;
     }
 }
