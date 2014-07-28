@@ -12,18 +12,23 @@
         <java-version>1.6</java-version>
         <org.springframework-version>3.2.4.RELEASE</org.springframework-version>
        	<jackson.version>2.2.2</jackson.version>
-       	<spring-cloud.version>0.9.8</spring-cloud.version>
+       	<spring-cloud.version>1.0.1.BUILD-SNAPSHOT</spring-cloud.version>
     </properties>
     <dependencies>
 		<!-- CloudFoundry -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>cloudfoundry-connector</artifactId>
+			<artifactId>spring-cloud-cloudfoundry-connector</artifactId>
 			<version>${spring-cloud.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-service-connector</artifactId>
+			<artifactId>spring-cloud-localconfig-connector</artifactId>
+			<version>${spring-cloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-spring-service-connector</artifactId>
 			<version>${spring-cloud.version}</version>
 		</dependency>
     
@@ -163,6 +168,11 @@
             <id>repository.springframework.maven.milestone</id>
             <name>Spring Framework Maven Milestone Repository</name>
             <url>http://maven.springframework.org/milestone</url>
+        </repository>
+        <repository>
+            <id>repository.springframework.maven.snapshot</id>
+            <name>Spring Framework Maven Milestone Repository</name>
+            <url>http://maven.springframework.org/snapshot</url>
         </repository>
     </repositories>
     <pluginRepositories>
